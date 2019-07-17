@@ -8,8 +8,8 @@ Rain::Rain(){
 	y = rand() % 500;
 	z = rand() % 20 + 1; 
 	
-	speed = z + SPEED;
-	size = (z / 3) + 1;
+	speed = (z / 4) + SPEED;
+	size = (z / 7) + 1;
 }
 
 void Rain::updatePosition(){

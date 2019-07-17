@@ -40,17 +40,22 @@ void init_window()
 
 /***************************************************************************/
 
-void write_pixel(int x, int y, double intensity)
+void write_pixel(int x, int y, double intensity, int size)
                                          /* Turn on the pixel found at x,y */
 {
 
         glColor4f (1.0, 1.0, 1.0, intensity/20);
-        printf("alpha is %f", intensity/20);
         glBegin(GL_POINTS);
+        if (size >= 1)
            glVertex3i( x, y, 0);
+         if (size >= 2) 
+         	 glVertex3i( x, y+1, 0);
+       	 if (size >= 3) {
+       	 	 glVertex3i( x, y+2, 0);
            glVertex3i( x+1, y, 0);
-           glVertex3i( x, y+1, 0);
            glVertex3i( x+1, y+1, 0);
+           glVertex3i( x+1, y+2, 0);
+         }
         glEnd();	
 }
 
@@ -58,7 +63,7 @@ void write_pixel(int x, int y, double intensity)
 
 void display ( void )   // Create The Display Function
 {
-	int x,y,z;
+	int x,y,z,size;
 	if (!paused){
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	      // Clear Screen 
 	
@@ -66,7 +71,8 @@ void display ( void )   // Create The Display Function
 			x = rain.returnParticle(i)->getX();
 			y = rain.returnParticle(i)->getY();
 			z = rain.returnParticle(i)->getZ();
-			write_pixel(x, y, z);
+			size = rain.returnParticle(i)->getSize();
+			write_pixel(x, y, z, size);
 			rain.returnParticle(i)->updatePosition();
 		}
 	}

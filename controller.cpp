@@ -1,9 +1,10 @@
 #include "controller.h"
 
-Controller::Controller(int num):
+Controller::Controller(int num, char type):
 	numOfParticles(num)
 {
-	particles = new Rain[numOfParticles];
+	if (type == 'r')
+		particles = new Rain[numOfParticles];
 }
 
 Controller::~Controller(){

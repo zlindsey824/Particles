@@ -1,8 +1,8 @@
 //
-//		           
+//
 //							This file provided by Victor Zordan in Computer Graphics class
-//		
-//		
+//
+//
 //
 /***************************************************************************/
 
@@ -24,7 +24,8 @@
 
 int x_last,y_last;
 bool paused = false;
-Controller rain(COUNT);
+Controller particles(COUNT,'r');
+const GLfloat rainColor[4] = {0.30, 0.74, 0.76, 1.0}
 
 /***************************************************************************/
 
@@ -44,11 +45,11 @@ void write_pixel(int x, int y, double intensity, int size)
                                          /* Turn on the pixel found at x,y */
 {
 
-        glColor4f (1.0, 1.0, 1.0, intensity/20);
+        glColor4f (rainColor);
         glBegin(GL_POINTS);
         if (size >= 1)
            glVertex3i( x, y, 0);
-         if (size >= 2) 
+         if (size >= 2)
          	 glVertex3i( x, y+1, 0);
        	 if (size >= 3) {
        	 	 glVertex3i( x, y+2, 0);
@@ -56,7 +57,7 @@ void write_pixel(int x, int y, double intensity, int size)
            glVertex3i( x+1, y+1, 0);
            glVertex3i( x+1, y+2, 0);
          }
-        glEnd();	
+        glEnd();
 }
 
 //***************************************************************************/
@@ -65,19 +66,19 @@ void display ( void )   // Create The Display Function
 {
 	int x,y,z,size;
 	if (!paused){
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	      // Clear Screen 
-	
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	      // Clear Screen
+
 		for (int i = 0; i < COUNT; i++){
-			x = rain.returnParticle(i)->getX();
-			y = rain.returnParticle(i)->getY();
-			z = rain.returnParticle(i)->getZ();
-			size = rain.returnParticle(i)->getSize();
+			x = particles.returnParticle(i)->getX();
+			y = particles.returnParticle(i)->getY();
+			z = particles.returnParticle(i)->getZ();
+			size = particles.returnParticle(i)->getSize();
 			write_pixel(x, y, z, size);
-			rain.returnParticle(i)->updatePosition();
+			particles.returnParticle(i)->updatePosition();
 		}
 	}
 
-  glutSwapBuffers();                                      // Draw Frame Buffer 
+  glutSwapBuffers();                                      // Draw Frame Buffer
 }
 
 /***************************************************************************/
@@ -90,9 +91,9 @@ void mouse(int button, int state, int x, int y)
         static int oldx = 0;
         static int oldy = 0;
 	int mag;
-	
+
 	y *= -1;  //align y with mouse
-	y += 500; //ignore 
+	y += 500; //ignore
 	mag = (oldx - x)*(oldx - x) + (oldy - y)*(oldy - y);
 	if (mag > 20) {
 		printf(" x,y is (%d,%d)\n", x,y);
@@ -102,7 +103,7 @@ void mouse(int button, int state, int x, int y)
 	x_last = x;
 	y_last = y;
 }
- 
+
 /***************************************************************************/
 void keyboard ( unsigned char key, int x, int y )  // Create Keyboard Function
 {
@@ -110,7 +111,7 @@ void keyboard ( unsigned char key, int x, int y )  // Create Keyboard Function
 	switch ( key ) {
 		case 27:              // When Escape Is Pressed...
 			exit ( 0 );   // Exit The Program
-			break;        
+			break;
     case '1':             // stub for new screen
       printf("New screen\n");
 			break;
@@ -120,7 +121,7 @@ void keyboard ( unsigned char key, int x, int y )  // Create Keyboard Function
 		case 'P':
 			paused = false;
 			break;
-		default:       
+		default:
 			break;
 	}
 }
@@ -132,19 +133,17 @@ int main (int argc, char *argv[])
    loop until the end of the data is reached.  Then the window can be closed
    using the escape key.						  */
 	srand( time(NULL) );
-	glutInit            ( &argc, argv ); 
-       	glutInitDisplayMode ( GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH ); 
-	glutInitWindowSize  ( 500,500 ); 
-	glutCreateWindow    ( "Computer Graphics" ); 
-	glutDisplayFunc     ( display );  
+	glutInit            ( &argc, argv );
+       	glutInitDisplayMode ( GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH );
+	glutInitWindowSize  ( 500,500 );
+	glutCreateWindow    ( "Computer Graphics" );
+	glutDisplayFunc     ( display );
 	glutIdleFunc	    ( display );
 	glutMouseFunc       ( mouse );
 	glutKeyboardFunc    ( keyboard );
-        					      
+
         init_window();				             //create_window
-						       		
-	
+
+
 	glutMainLoop        ( );                 // Initialize The Main Loop
 }
-
-

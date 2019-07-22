@@ -1,15 +1,16 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
+#include "particle.h"
 #include "rain.h"
 
 class Controller{
 public:
-	Controller(int num);
+	Controller(int num, char type);
 	~Controller();
-	Rain* returnParticle(int index);
+	Particle* returnParticle(int index);
 private:
-	Rain* particles;
+	Particle* particles;
 	int numOfParticles;
 };
 

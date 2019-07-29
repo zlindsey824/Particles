@@ -17,3 +17,4 @@ class Particle {
     int speed;
     int size;
 };
+#endif

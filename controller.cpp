@@ -11,6 +11,6 @@ Controller::~Controller(){
 	delete[] particles;
 }
 
-Rain* Controller::returnParticle(int index){
+Particle* Controller::returnParticle(int index){
 	return &particles[index];
 }

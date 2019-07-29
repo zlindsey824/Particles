@@ -25,7 +25,7 @@
 int x_last,y_last;
 bool paused = false;
 Controller particles(COUNT,'r');
-const GLfloat rainColor[4] = {0.30, 0.74, 0.76, 1.0}
+const GLfloat rainColor[4] = {0.30, 0.74, 0.76, 1.0};
 
 /***************************************************************************/
 
@@ -45,7 +45,7 @@ void write_pixel(int x, int y, double intensity, int size)
                                          /* Turn on the pixel found at x,y */
 {
 
-        glColor4f (rainColor);
+        glColor4fv (rainColor);
         glBegin(GL_POINTS);
         if (size >= 1)
            glVertex3i( x, y, 0);

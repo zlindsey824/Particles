@@ -1,4 +1,5 @@
 #include "snow.h"
+#include <iostream>
 
 #define SPEED 1
 
@@ -22,4 +23,4 @@ void Snow::updatePosition(){
   }
 
 }
-}
+

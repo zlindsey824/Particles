@@ -11,13 +11,14 @@ TARGETS = $(PROGFILES:.cpp=)
 PROGFILES = \
         assn1.cpp \
         rain.cpp \
+	snow.cpp \
         controller.cpp \
         $(NULL)
 
 targets default: $(TARGETS)
 
-$(PROGFILES:.cpp=): assn1.o rain.o controller.o
-	$(CC) -o assn1 assn1.o rain.o controller.o ${LFLAGS}
+$(PROGFILES:.cpp=): assn1.o rain.o snow.o controller.o
+	$(CC) -o assn1 assn1.o rain.o snow.o controller.o ${LFLAGS}
 
 depend :
 	makedepend ${PROGFILES}

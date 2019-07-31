@@ -24,7 +24,7 @@
 
 int x_last,y_last;
 bool paused = false;
-Controller particles(COUNT,'r');
+Controller particles(COUNT,'s');
 const GLfloat rainColor[4] = {0.30, 0.74, 0.76, 1.0};
 
 /***************************************************************************/
@@ -47,11 +47,11 @@ void write_pixel(int x, int y, double intensity, int size)
 
         glColor4fv (rainColor);
         glBegin(GL_POINTS);
-        if (size >= 1)
+        if (size >= 0)
            glVertex3i( x, y, 0);
-         if (size >= 2)
+         if (size >= 1)
          	 glVertex3i( x, y+1, 0);
-       	 if (size >= 3) {
+       	 if (size >= 2) {
        	 	 glVertex3i( x, y+2, 0);
            glVertex3i( x+1, y, 0);
            glVertex3i( x+1, y+1, 0);
@@ -116,10 +116,8 @@ void keyboard ( unsigned char key, int x, int y )  // Create Keyboard Function
       printf("New screen\n");
 			break;
 		case 'p':
-			paused = true;
+			paused = !paused;
 			break;
-		case 'P':
-			paused = false;
 			break;
 		default:
 			break;
@@ -135,7 +133,7 @@ int main (int argc, char *argv[])
 	srand( time(NULL) );
 	glutInit            ( &argc, argv );
        	glutInitDisplayMode ( GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH );
-	glutInitWindowSize  ( 500,500 );
+	glutInitWindowSize  ( WIDTH,HEIGHT );
 	glutCreateWindow    ( "Computer Graphics" );
 	glutDisplayFunc     ( display );
 	glutIdleFunc	    ( display );

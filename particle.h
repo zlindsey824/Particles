@@ -1,6 +1,9 @@
 #ifndef PARTICLE_H
 #define PARTICLE_H
 
+#define WIDTH 500
+#define HEIGHT 500
+
 class Particle {
   public:
     virtual void updatePosition() = 0;

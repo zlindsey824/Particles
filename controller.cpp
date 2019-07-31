@@ -3,8 +3,19 @@
 Controller::Controller(int num, char type):
 	numOfParticles(num)
 {
-	if (type == 'r')
-		particles = new Rain[numOfParticles];
+	switch (type){
+		case 'r':
+			particles = new Rain[numOfParticles];
+			break;
+		case 's':
+			particles = new Snow[numOfParticles];
+			break;
+		case 'f':
+			break;
+		default:
+			break;
+	}
+
 }
 
 Controller::~Controller(){

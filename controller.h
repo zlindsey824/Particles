@@ -3,6 +3,7 @@
 
 #include "particle.h"
 #include "rain.h"
+#include "snow.h"
 
 class Controller{
 public:

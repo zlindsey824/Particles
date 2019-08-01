@@ -1,14 +1,14 @@
 #include <iostream>
 #include "snow.h"
 
-#define SPEED 2
+#define SPEED 1
 
 Snow::Snow(){
   x = rand() % WIDTH;
   y = rand() % HEIGHT;
   z = rand() % 10;
 
-  speed = (z / 4) + SPEED;
+  speed = (z / 3) + SPEED;
   size = z / 4;
 }
 
@@ -19,7 +19,7 @@ void Snow::updatePosition(){
 	}
 	else{
     y -= speed;
-    x += rand() % (size*2 + 1) - size;
+    x += rand() % ( (size < 1 ? 1 : size) * 2 + 1) - (size < 1 ? 1 : size);
   }
-
 }
+

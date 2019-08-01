@@ -20,11 +20,12 @@
 #define WIDTH 500
 #define HEIGHT 500
 
-#define COUNT 50
+#define COUNT 250
 
 int x_last,y_last;
 bool paused = false;
-Controller particles(COUNT,'s');
+Controller* particles = nullptr;
+const GLfloat* particleColor;
 const GLfloat rainColor[4] = {0.30, 0.74, 0.76, 1.0};
 const GLfloat snowColor[4] = {1.0, 1.0, 1.0, 1.0};
 
@@ -46,7 +47,7 @@ void write_pixel(int x, int y, double intensity, int size)
                                          /* Turn on the pixel found at x,y */
 {
 
-        glColor4fv (snowColor);
+        glColor4fv (particleColor);
         glBegin(GL_POINTS);
         if (size >= 0)
            glVertex3i( x, y, 0);
@@ -66,16 +67,18 @@ void write_pixel(int x, int y, double intensity, int size)
 void display ( void )   // Create The Display Function
 {
 	int x,y,z,size;
-	if (!paused){
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	      // Clear Screen
+	if (particles != nullptr){
+		if (!paused){
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	      // Clear Screen
 
-		for (int i = 0; i < COUNT; i++){
-			x = particles.returnParticle(i)->getX();
-			y = particles.returnParticle(i)->getY();
-			z = particles.returnParticle(i)->getZ();
-			size = particles.returnParticle(i)->getSize();
-			write_pixel(x, y, z, size);
-			particles.returnParticle(i)->updatePosition();
+			for (int i = 0; i < particles->returnAmount(); i++){
+				x = particles->returnParticle(i)->getX();
+				y = particles->returnParticle(i)->getY();
+				z = particles->returnParticle(i)->getZ();
+				size = particles->returnParticle(i)->getSize();
+				write_pixel(x, y, z, size);
+				particles->returnParticle(i)->updatePosition();
+			}
 		}
 	}
 
@@ -119,6 +122,15 @@ void keyboard ( unsigned char key, int x, int y )  // Create Keyboard Function
 		case 'p':
 			paused = !paused;
 			break;
+		case 'r':
+			delete particles;
+			particles = new Controller(COUNT,'r');
+			particleColor = rainColor;
+			break;
+		case 's':
+			delete particles;
+			particles = new Controller(COUNT,'s');
+			particleColor = snowColor;
 			break;
 		default:
 			break;
@@ -145,4 +157,6 @@ int main (int argc, char *argv[])
 
 
 	glutMainLoop        ( );                 // Initialize The Main Loop
+	
+	delete particles;
 }
